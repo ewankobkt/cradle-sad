@@ -20,6 +20,28 @@ $cradle->on('render-www-blank', function ($request, $response) {
         'content' => $response->getContent()
     ]);
 
+    //path
+    $path = $request->getPath('string');
+    if (strpos($path, '?') !== false) {
+        $path = substr($path, 0, strpos($path, '?'));
+    }
+
+    $response->addMeta('path', $path);
+
+    $content = cradle('/app/www')->template(
+        '_page',
+        [
+            'page' => $response->getPage(),
+            'results' => $response->getResults(),
+            'content' => $response->getContent(),
+            'i18n' => $request->getSession('i18n')
+        ],
+        [
+            'head',
+            'foot'
+        ]
+    );
+
     $response->setContent($content);
 });
 

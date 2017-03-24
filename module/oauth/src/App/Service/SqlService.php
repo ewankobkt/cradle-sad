@@ -103,6 +103,16 @@ class SqlService extends AbstractSqlService implements SqlServiceInterface
         return $results;
     }
 
+    public function getCities()
+    {
+        $search = $this->resource
+            ->search('city');
+
+        $results = $search->getRows();
+
+        return $results;
+    }
+
     /**
      * Links profile
      *

@@ -491,6 +491,7 @@ $cradle->post('/register', function ($request, $response) {
 
     if ($response->isError()) {
         return cradle()->triggerRoute('get', '/provinces', $request, $response);
+        //return cradle()->triggerRoute('get', '/cities', $request, $response);
     }
 
 /*    if (!$request->getStage('confirm')) {
@@ -499,25 +500,12 @@ $cradle->post('/register', function ($request, $response) {
 */
     //trigger the job
     cradle()->trigger('provinces', $request, $response);
+    //cradle()->trigger('cities', $request, $response);
 
     if ($response->isError()) {
         return cradle()->triggerRoute('get', '/register', $request, $response);
     }
-
-    //it was good
-    //update the session
-    /*cradle()->trigger('auth-detail', $request, $response);
-    $_SESSION['me'] = $response->getResults();
-
-    //add a flash
-    cradle('global')->flash('Update Successful', 'success');
-
-    //redirect
-    $redirect = '/';
-    if ($request->hasGet('redirect_uri')) {
-        $redirect = $request->getGet('redirect_uri');
-    }
-*/
+    
     cradle('global')->redirect($redirect);
 });
 

@@ -8,17 +8,15 @@
  */
 $cradle->get('/register', function ($request, $response) {
     //Prepare body
-    $data = ['provinces' => [
-        'ProvinceID' => 2,
-        'ProvinceName' => 'sdfsdf'
-    ],
-    [
-        'ProvinceID' => 3,
-        'ProvinceName' => 'foo'
-    ],];
-cradle()->inspect($data);
+    $provinces = cradle()->trigger('provinces', $request, $response);
+//    $cities = cradle()->trigger('cities', $request, $response);
+    $data['provinces'] = $provinces->response->json["results"];
+    //$data['cities'] = $cities->response->json["results"];
+    // print_r($data);
+// cradle()->inspect($data['provinces']);
+// exit;
     //Render body
-    $class = 'page-home branding';
+    $class = 'page-auth-register';
     $title = cradle('global')->translate('Bidding');
     $body = cradle('/app/www')->template('register', $data);
 
@@ -29,4 +27,4 @@ cradle()->inspect($data);
         ->setContent($body);
 
     //Render blank page
-}, 'render-www-page');
+}, 'render-www-blank');

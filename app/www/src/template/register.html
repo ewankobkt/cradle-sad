@@ -5,7 +5,7 @@
 			Register here to bid on items.
 		</div>
 		<form class="ui form" action="/insertAccount" method="POST" enctype="multipart/form-data" ng-app="myApp" ng-controller="myController">
-			<input type="hidden" name="_token" value="{{ csrf_token() }}">
+			<!--<input type="hidden" name="_token" value="{{ csrf_token() }}">-->
 		  	<div class="equal width fields">
 			  	<div class="field">
 				    <label>First Name</label>
@@ -26,7 +26,10 @@
 	                <div class="ui sub header">Province</div>
 	                	<select name="province" class="ui search selection dropdown" ng-model="inputProvince" ng-change="reloadCities();" >
 	                    	<option value="" disabled selected>Province</option>
-	            	    	<option ng-repeat="province in provinces" value="{{province.ProvinceID}}">{{province.ProvinceName}}</option>
+	                    	<!--<option>{{provinces.0.ProvinceID}}</option>-->
+	            	    	{{#each provinces}}
+	            	    	<option value="{{ProvinceID}}">{{ProvinceName}}</option>
+	            	    	{{/each}}
 	                	</select>
 	            </div>
 				<div class="field">
@@ -145,11 +148,6 @@
 <script>
 	var app = angular.module('myApp', []);
 	app.controller('myController', function($scope, $http) {
-	    $http.get('/provinces')
-	    .then(function(response){
-	    	$scope.provinces = response.data.results;
-	    	console.log($scope.provinces);
-	    });
 
 	    $scope.reloadCities = function(){
 	    	$http.get('/cityOptions?provID=' + $scope.inputProvince)
