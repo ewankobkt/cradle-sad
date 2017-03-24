@@ -24,7 +24,7 @@
 		  	<div class="equal width fields">
 				<div class="field">
 	                <div class="ui sub header">Province</div>
-	                	<select name="province" class="ui search selection dropdown" ng-model="inputProvince" ng-change="reloadCities();" >
+	                	<select id="province" name="province" class="ui search selection dropdown" ng-model="inputProvince" ng-change="reloadCities();" >
 	                    	<option value="" disabled selected>Province</option>
 	                    	<!--<option>{{provinces.0.ProvinceID}}</option>-->
 	            	    	{{#each provinces}}
@@ -89,7 +89,9 @@
 	                <div class="ui sub header">Account Type</div>
                 	<select name="accounttype" class="ui search selection dropdown" ng-model="accountType" ng-change="accountTypeRequiredDocu()">
                     	<option value="" disabled selected>Account Type</option>
-            	    	<option ng-repeat="accounttype in accounttypes" value="{{accounttype.AccountTypeID}}">{{accounttype.AccountTypeName}}</option>
+	            	    {{#each accounttypes}}
+	            	    <option value="{{AccountTypeID}}">{{AccountTypeName}}</option>
+	            	    {{/each}}
                 	</select>
 	            </div>
 				<div class="field">
@@ -150,16 +152,11 @@
 	app.controller('myController', function($scope, $http) {
 
 	    $scope.reloadCities = function(){
-	    	$http.get('/cityOptions?provID=' + $scope.inputProvince)
-	    	.then(function(response){
-	    		$scope.cities = response.data;
-	    	});
-	    }
+	    	var prov = document.getElementById("province");
+	    	var provId = prov.options[prov.selectedIndex].value;
 
-	    $http.get('/accounttypes')
-	    .then(function(response){
-	    	$scope.accounttypes = response.data;
-	    });
+	    	// alert(provId);
+	    }
 
 	    $scope.comparePasswords = function(){
 	    	if ($scope.password == $scope.password_confirmation && $scope.password != ""){

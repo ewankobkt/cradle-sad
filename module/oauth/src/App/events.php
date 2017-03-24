@@ -79,3 +79,38 @@ $cradle->on('cities', function ($request, $response) {
     $response->setResults($results);
 
 });
+
+$cradle->on('accounttypes', function ($request, $response) {
+    //----------------------------//
+    // 1. Get Data
+    $data = [];
+    if ($request->hasStage()) {
+        $data = $request->getStage();
+    }
+
+    //----------------------------//
+    // 2. Validate Data
+    //no validation needed
+    //----------------------------//
+    // 3. Prepare Data
+    //no preparation needed
+    //----------------------------//
+    // 4. Process Data
+    //this/these will be used a lot
+    $results = "";
+    $appSql = AppService::get('sql');
+
+    //if no results
+    if (!$results) {
+
+        //if no results
+        if (!$results) {
+            //get it from database
+            $results = $appSql->getAccountTypes();
+        }
+    }
+
+    //set response format
+    $response->setResults($results);
+
+});

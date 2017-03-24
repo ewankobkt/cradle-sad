@@ -113,6 +113,16 @@ class SqlService extends AbstractSqlService implements SqlServiceInterface
         return $results;
     }
 
+    public function getAccountTypes()
+    {
+        $search = $this->resource
+            ->search('accounttype');
+
+        $results = $search->getRows();
+
+        return $results;
+    }
+
     /**
      * Links profile
      *

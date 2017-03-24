@@ -491,7 +491,8 @@ $cradle->post('/register', function ($request, $response) {
 
     if ($response->isError()) {
         return cradle()->triggerRoute('get', '/provinces', $request, $response);
-        //return cradle()->triggerRoute('get', '/cities', $request, $response);
+        return cradle()->triggerRoute('get', '/cities', $request, $response);
+        return cradle()->triggerRoute('get', '/accounttypes', $request, $response);
     }
 
 /*    if (!$request->getStage('confirm')) {
@@ -500,7 +501,8 @@ $cradle->post('/register', function ($request, $response) {
 */
     //trigger the job
     cradle()->trigger('provinces', $request, $response);
-    //cradle()->trigger('cities', $request, $response);
+    cradle()->trigger('cities', $request, $response);
+    cradle()->trigger('accounttypes', $request, $response);
 
     if ($response->isError()) {
         return cradle()->triggerRoute('get', '/register', $request, $response);

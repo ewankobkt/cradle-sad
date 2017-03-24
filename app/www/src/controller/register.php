@@ -9,11 +9,13 @@
 $cradle->get('/register', function ($request, $response) {
     //Prepare body
     $provinces = cradle()->trigger('provinces', $request, $response);
-//    $cities = cradle()->trigger('cities', $request, $response);
     $data['provinces'] = $provinces->response->json["results"];
-    //$data['cities'] = $cities->response->json["results"];
+    $cities = cradle()->trigger('cities', $request, $response);
+    $data['cities'] = $cities->response->json["results"];
+    $accounttypes = cradle()->trigger('accounttypes', $request, $response);
+    $data['accounttypes'] = $accounttypes->response->json["results"];
     // print_r($data);
-// cradle()->inspect($data['provinces']);
+// cradle()->inspect($data);
 // exit;
     //Render body
     $class = 'page-auth-register';
