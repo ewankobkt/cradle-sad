@@ -1,57 +1,27 @@
-<nav class="navbar navbar-default navbar-branding navbar-static-top">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/"><img alt="Cradle PHP" src="/images/logo-long.png" /></a>
-        </div>
+<!DOCTYPE html>
+  <html>
+    <head>
+    <title>Bidding</title>
+      <!--CSS-->
+      <link rel="icon" href="icons/favicon.ico">
+      <link rel="stylesheet" type="text/css" href="{{config 'cdn'}}/css/Semantic-UI-CSS-master/semantic.css" />
+      <link rel="stylesheet" type="text/css" href="{{config 'cdn'}}/css/dataTables.semanticui.min.css" />
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="header">
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                    <a
-                        title="Choose Your Language"
-                        href="javascript:void(0)"
-                        class="dropdown-toggle"
-                        data-toggle="dropdown"
-                        role="button"
-                        aria-haspopup="true"
-                        aria-expanded="false">
-                            {{i18n}} <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a title="Chinese" href="/can_CN{{page.meta.path}}">Catonese</a></li>
-                        <li><a title="English" href="/en_US{{page.meta.path}}">English</a></li>
-                        <li><a title="French" href="/fr_FR{{page.meta.path}}">French</a></li>
-                        <li><a title="Chinese" href="/cmn_CN{{page.meta.path}}">Mandarin</a></li>
-                        <li><a title="Spanish" href="/es_ES{{page.meta.path}}">Spanish</a></li>
-                        <li><a title="Filipino" href="/tl_PH{{page.meta.path}}">Tagalog</a></li>
-                        <li><a title="Thai" href="/th_TH{{page.meta.path}}">Thai</a></li>
-                        <li><a title="Filipino" href="/ceb_PH{{page.meta.path}}">Visaya</a></li>
-                    </ul>
-                </li>
-                {{#session 'me'}}
-                    <li>
-                        <a href="/account?redirect_uri={{../page.meta.path}}" class="btn text-info">
-                            {{_ 'Account Settings'}}
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/logout?redirect_uri={{../page.meta.path}}" class="btn text-danger">
-                            {{_ 'Logout'}}
-                        </a>
-                    </li>
-                {{else}}
-                    <li><a href="/login?redirect_uri={{page.meta.path}}">{{_ 'Login'}}</a></li>
-                    <li><a href="/signup?redirect_uri={{page.meta.path}}">{{_ 'Signup'}}</a></li>
-                {{/session}}
-            </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-</nav>
+      <!--JAVASCRIPT -->
+      <script type="text/javascript" src="{{config 'cdn'}}/scripts/jquery-2.1.1.min.js"></script>
+      <script type="text/javascript" src="{{config 'cdn'}}/scripts/semantic.min.js"></script>
+      <script type="text/javascript" src="{{config 'cdn'}}/scripts/y-1.12.3.js"></script>
+      <script type="text/javascript" src="{{config 'cdn'}}/scripts/jquery.dataTables.min.js"></script>
+      <script type="text/javascript" src="{{config 'cdn'}}/scripts/dataTables.semanticui.min.js"></script>
+      <script type="text/javascript" src="{{config 'cdn'}}/scripts/angular.min.js"></script>
+      <script type="text/javascript" src="{{config 'cdn'}}/scripts/angular-datatables.min.js"></script>
+      <script type="text/javascript" src="{{config 'cdn'}}/scripts/semantic.min.js"></script>
+      <script type="text/javascript" src="{{config 'cdn'}}/scripts/moment.min.js"></script>
+      <script type="text/javascript" src="{{config 'cdn'}}/scripts/locales.min.js"></script>
+      <script type="text/javascript" src="{{config 'cdn'}}/scripts/humanize-duration.js"></script>
+      <script type="text/javascript" src="{{config 'cdn'}}/scripts/angular-timer.min.js"></script>
+      <link type="text/css" rel="stylesheet" href="{{config 'cdn'}}/css/angular-datatables.css"/>
+    </head>
+
+    <body style="background-image: url('/icons/bg2.png');  background-repeat: no-repeat;
+    background-attachment: fixed;">

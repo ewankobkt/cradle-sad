@@ -69,9 +69,7 @@ class SqlService extends AbstractSqlService implements SqlServiceInterface
     public function get($id)
     {
         $search = $this->resource
-            ->search('app')
-            ->innerJoinUsing('app_profile', 'app_id')
-            ->innerJoinUsing('profile', 'profile_id');
+            ->search('province');
 
         if (is_numeric($id)) {
             $search->filterByAppId($id);
@@ -91,6 +89,16 @@ class SqlService extends AbstractSqlService implements SqlServiceInterface
         } else {
             $results['app_permissions'] = [];
         }
+
+        return $results;
+    }
+
+    public function getProvinces()
+    {
+        $search = $this->resource
+            ->search('province');
+
+        $results = $search->getRows();
 
         return $results;
     }

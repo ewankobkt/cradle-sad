@@ -447,6 +447,81 @@ $cradle->post('/login', function ($request, $response) {
     return cradle('global')->redirect($redirect);
 });
 
+$cradle->post('/loginAccount', function ($request, $response) {
+    //csrf check
+    cradle()->trigger('csrf-validate', $request, $response);
+
+    if ($response->isError()) {
+        return cradle()->triggerRoute('get', '/login', $request, $response);
+    }
+
+    //call the job
+    cradle()->trigger('auth-login', $request, $response);
+
+    if ($response->isError()) {
+        return cradle()->triggerRoute('get', '/login', $request, $response);
+        ;
+    }
+
+    //it was good
+
+    //store to session
+    //TODO: Sessions for clusters
+    $_SESSION['me'] = $response->getResults();
+
+    //redirect
+    if ($request->hasGet('redirect')) {
+        return cradle('global')->redirect($request->getGet('redirect'));
+    }
+
+    $redirect = '/';
+    if ($request->hasGet('redirect_uri')) {
+        $redirect = $request->getGet('redirect_uri');
+    }
+
+    return cradle('global')->redirect($redirect);
+});
+
+$cradle->post('/register', function ($request, $response) {
+    //need to be online
+    //cradle('global')->requireLogin();
+
+    //csrf check
+    //cradle()->trigger('csrf-validate', $request, $response);
+
+    if ($response->isError()) {
+        return cradle()->triggerRoute('get', '/provinces', $request, $response);
+    }
+
+/*    if (!$request->getStage('confirm')) {
+        $request->removeStage('confirm');
+    }
+*/
+    //trigger the job
+    cradle()->trigger('provinces', $request, $response);
+
+    if ($response->isError()) {
+        return cradle()->triggerRoute('get', '/register', $request, $response);
+    }
+
+    //it was good
+    //update the session
+    /*cradle()->trigger('auth-detail', $request, $response);
+    $_SESSION['me'] = $response->getResults();
+
+    //add a flash
+    cradle('global')->flash('Update Successful', 'success');
+
+    //redirect
+    $redirect = '/';
+    if ($request->hasGet('redirect_uri')) {
+        $redirect = $request->getGet('redirect_uri');
+    }
+*/
+    cradle('global')->redirect($redirect);
+});
+
+
 /**
  * Process the Forgot Page
  *
