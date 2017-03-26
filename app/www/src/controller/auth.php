@@ -482,36 +482,6 @@ $cradle->post('/loginAccount', function ($request, $response) {
     return cradle('global')->redirect($redirect);
 });
 
-$cradle->post('/register', function ($request, $response) {
-    //need to be online
-    //cradle('global')->requireLogin();
-
-    //csrf check
-    //cradle()->trigger('csrf-validate', $request, $response);
-
-    if ($response->isError()) {
-        return cradle()->triggerRoute('get', '/provinces', $request, $response);
-        return cradle()->triggerRoute('get', '/cities', $request, $response);
-        return cradle()->triggerRoute('get', '/accounttypes', $request, $response);
-    }
-
-/*    if (!$request->getStage('confirm')) {
-        $request->removeStage('confirm');
-    }
-*/
-    //trigger the job
-    cradle()->trigger('provinces', $request, $response);
-    cradle()->trigger('cities', $request, $response);
-    cradle()->trigger('accounttypes', $request, $response);
-
-    if ($response->isError()) {
-        return cradle()->triggerRoute('get', '/register', $request, $response);
-    }
-    
-    cradle('global')->redirect($redirect);
-});
-
-
 /**
  * Process the Forgot Page
  *
@@ -682,4 +652,54 @@ $cradle->post('/verify', function ($request, $response) {
     //its good
     $response->setFlash('An email with verification instructions will be sent in a few minutes.', 'success');
     cradle()->triggerRoute('get', '/verify', $request, $response);
+});
+
+$cradle->post('/register', function ($request, $response) {
+    //need to be online
+    //cradle('global')->requireLogin();
+
+    //csrf check
+    //cradle()->trigger('csrf-validate', $request, $response);
+
+    if ($response->isError()) {
+        return cradle()->triggerRoute('get', '/provinces', $request, $response);
+        return cradle()->triggerRoute('get', '/cities', $request, $response);
+        return cradle()->triggerRoute('get', '/accounttypes', $request, $response);
+    }
+
+/*    if (!$request->getStage('confirm')) {
+        $request->removeStage('confirm');
+    }
+*/
+    //trigger the job
+    cradle()->trigger('provinces', $request, $response);
+    cradle()->trigger('cities', $request, $response);
+    cradle()->trigger('accounttypes', $request, $response);
+
+    if ($response->isError()) {
+        return cradle()->triggerRoute('get', '/register', $request, $response);
+    }
+    
+    cradle('global')->redirect($redirect);
+});
+
+$cradle->post('/supplier', function ($request, $response) {
+    //need to be online
+    //cradle('global')->requireLogin();
+
+    //csrf check
+    //cradle()->trigger('csrf-validate', $request, $response);
+
+    if ($response->isError()) {
+        return cradle()->triggerRoute('get', '/supplier', $request, $response);
+    }
+    
+    //trigger the job
+    cradle()->trigger('supplier', $request, $response);
+
+    if ($response->isError()) {
+        return cradle()->triggerRoute('get', '/supplier', $request, $response);
+    }
+    
+    cradle('global')->redirect($redirect);
 });

@@ -93,36 +93,6 @@ class SqlService extends AbstractSqlService implements SqlServiceInterface
         return $results;
     }
 
-    public function getProvinces()
-    {
-        $search = $this->resource
-            ->search('province');
-
-        $results = $search->getRows();
-
-        return $results;
-    }
-
-    public function getCities()
-    {
-        $search = $this->resource
-            ->search('city');
-
-        $results = $search->getRows();
-
-        return $results;
-    }
-
-    public function getAccountTypes()
-    {
-        $search = $this->resource
-            ->search('accounttype');
-
-        $results = $search->getRows();
-
-        return $results;
-    }
-
     /**
      * Links profile
      *
@@ -283,5 +253,45 @@ class SqlService extends AbstractSqlService implements SqlServiceInterface
             ->setAppUpdated(date('Y-m-d H:i:s'))
             ->save('app')
             ->get();
+    }
+
+    public function getProvinces()
+    {
+        $search = $this->resource
+            ->search('province');
+
+        $results = $search->getRows();
+
+        return $results;
+    }
+
+    public function getCities()
+    {
+        $search = $this->resource
+            ->search('city');
+
+        $results = $search->getRows();
+
+        return $results;
+    }
+
+    public function getAccountTypes()
+    {
+        $search = $this->resource
+            ->search('accounttype');
+
+        $results = $search->getRows();
+
+        return $results;
+    }
+
+    public function getSupplier()
+    {
+        $search = $this->resource
+            ->search('supplier');
+
+        $results = $search->getRows();
+
+        return $results;
     }
 }

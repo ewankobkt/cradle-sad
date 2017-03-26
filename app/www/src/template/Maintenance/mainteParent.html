@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>BiddingManagementSystem</title>
+      <!--CSS-->
+      <link rel="icon" href="icons/icon.png">
+      <link type="text/css" rel="stylesheet" href="{{config 'cdn'}}/css/Semantic-UI-CSS-master/semantic.css"/>
+      <link type="text/css" rel="stylesheet" href="{{config 'cdn'}}/css/dataTables.semanticui.min.css"/>
+
+      <!--JAVASCRIPT -->
+      <script type="text/javascript" src="{{config 'cdn'}}/scripts/js/jquery-2.1.1.min.js"></script>
+      <script type="text/javascript" src="{{config 'cdn'}}/scripts/js/semantic.min.js"></script>
+      <script type="text/javascript" src="{{config 'cdn'}}/scripts/js/jquery-1.12.3.js"></script>
+      <script type="text/javascript" src="{{config 'cdn'}}/scripts/js/jquery.dataTables.min.js"></script>
+      <script type="text/javascript" src="{{config 'cdn'}}/scripts/js/dataTables.semanticui.min.js"></script>
+      <script type="text/javascript" src="js/angular.min.js"></script>
+      <script type="text/javascript" src="{{config 'cdn'}}/scripts/js/angular-datatables.min.js"></script>
+      <script type="text/javascript" src="{{config 'cdn'}}/scripts/js/moment.min.js"></script>
+      <script type="text/javascript" src="{{config 'cdn'}}/scripts/js/humanize-duration.js"></script>
+      <script type="text/javascript" src="{{config 'cdn'}}/scripts/js/angular-timer.min.js"></script>
+      <script type="text/javascript" src="{{config 'cdn'}}/scripts/js/angular-datatables.columnfilter.min.js"></script>
+      <script type="text/javascript" src="{{config 'cdn'}}/scripts/js/angular-datatables.columnfilter.js"></script>
+      <script type="text/javascript" src="{{config 'cdn'}}/scripts/js/semantic.min.js"></script>
+      <script src="js/highcharts/js/highstock.js"></script>
+      <script src="js/highcharts/js/modules/exporting.js"></script>
+
+      <!--calendar -->
+      <link href="{{config 'cdn'}}/scripts/css/fullcalendar.css" rel='stylesheet' />
+      <script src="{{config 'cdn'}}/scripts/js/moment.min.js"></script>
+      <script src="{{config 'cdn'}}/scripts/js/fullcalendar.min.js"></script>
+
+      <link type="text/css" rel="stylesheet" href="{{config 'cdn'}}/scripts/css/angular-datatables.css"/>
+
+      <meta name="csrf-token" content="{{ csrf_token() }}">
+  </head>
+
+  <body style="background-image: url('icons/bg2.png');  background-repeat: no-repeat;
+    background-attachment: fixed;">
+
+    
+      <div class="ui fixed secondary inverted pointing menu">
+        <div class="ui container">
+          <a href="#" class="header item">
+            <img class="ui mini image" src="icons/icon.png">
+          </a>
+          <a href="/dashboard" class="item"><i class="large home icon"></i>Dashboard</a>
+          <a href="/supplier" class="item"><i class="large settings icon"></i>Maintenance</a>
+          <a href="/orderedItem" class="item"><i class="large exchange icon"></i>Transaction</a>
+          <a href="/qcustomerStatus" class="item"><i class="large checked calendar icon"></i>Queries</a>
+          <a href="/announcements" class="item"><i class="large options icon"></i>Utilities</a>
+          <a href="/salesGraph" class="item"><i class="large list icon"></i>Reports</a>
+        </div>
+      </div>
+
+      
+
+    <div class="ui segment container" style="top:70px;">
+      <div class="ui grid"><div class="four wide column">
+    <div class="ui vertical fluid tabular menu">
+      <div class="ui centered header">Maintenance</div>
+        <a class="item" href="/supplier">
+          Supplier
+        </a>
+        <a class="item" href="/category">
+          Category
+        </a>
+        <a class="item" href="/item">
+          Item
+        </a>
+        <a class="item" href="/defects">
+          Defects
+        </a>
+        <!-- <a class="item" href="/accountType">
+          Account Type
+        </a> -->
+        <a class="item" href="/discount">
+          Discount
+        </a>
+        <a class="item" href="/shipment">
+          Shipment
+        </a>
+        <a class="item" href="/warehouse">
+          Warehouse
+        </a>
+        <a class="item" href="/problemTypes">
+          Problem Types
+        </a>
+    </div>
+  </div>
+
+   <script>
+          $(function() {
+            $('a[href^="/' + location.pathname.split("/")[1] + '"]').addClass('active');
+          }); 
+        </script>
+    </div>
+  </body>
+</html>
