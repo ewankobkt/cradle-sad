@@ -703,3 +703,24 @@ $cradle->post('/supplier', function ($request, $response) {
     
     cradle('global')->redirect($redirect);
 });
+
+$cradle->post('/sampleretrieve', function ($request, $response) {
+    //need to be online
+    //cradle('global')->requireLogin();
+
+    //csrf check
+    //cradle()->trigger('csrf-validate', $request, $response);
+
+    if ($response->isError()) {
+        return cradle()->triggerRoute('get', '/sample', $request, $response);
+    }
+    
+    //trigger the job
+    cradle()->trigger('sample', $request, $response);
+
+    if ($response->isError()) {
+        return cradle()->triggerRoute('get', '/sample', $request, $response);
+    }
+    
+    cradle('global')->redirect($redirect);
+});

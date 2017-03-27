@@ -283,4 +283,12 @@ class SqlService extends AbstractSqlService implements SqlServiceInterface
             ->save('auth')
             ->get();
     }
+
+    public function addData(array $data)
+    {
+        return $this->resource
+            ->model($data)
+            ->save('sample')
+            ->get();
+    }
 }

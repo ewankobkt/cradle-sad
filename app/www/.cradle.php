@@ -10,6 +10,11 @@
 //include the other routes
 include_once __DIR__ . '/src/controller/auth.php';
 
+//sample
+include_once __DIR__ . '/src/controller/sample.php';
+// include_once __DIR__ . '/src/controller/sampleCreate.php';
+// include_once __DIR__ . '/src/controller/addData.php';
+
 //for bidding system
 include_once __DIR__ . '/src/controller/static.php';
 //include_once __DIR__ . '/src/controller/index.php';

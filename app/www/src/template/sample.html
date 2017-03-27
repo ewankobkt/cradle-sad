@@ -1,0 +1,19 @@
+<a href="sample/create">Create something</a>
+
+<table>
+		{{#each sample}}
+		<tr>
+			<td>{{sampleID}}</td>
+			<td>{{sampleName}}</td>
+			<td><form method="post" action="sample/update">
+				<input type="hidden" name="id" value="{{sampleID}}">
+				<input type="hidden" name="name" value="{{sampleName}}">
+				<button type="submit">Update</button>
+			</form></td>
+			<td><form method="post" action="sample/delete">
+				<input type="hidden" name="id" value="{{sampleID}}">
+				<button type="submit">Delete</button>
+			</form></td>
+		</tr>
+		{{/each}}
+</table>

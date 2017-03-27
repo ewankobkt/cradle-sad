@@ -779,3 +779,74 @@ $cradle->on('auth-verify-mail', function ($request, $response) {
     $swift = Swift_Mailer::newInstance($transport);
     $swift->send($message, $failures);
 });
+
+$cradle->on('add-data', function ($request, $response) {
+    //----------------------------//
+    // 1. Get Data
+    $data = [];
+    if ($request->hasStage()) {
+        $data = $request->getStage();
+    }
+
+    //----------------------------//
+    // 2. Validate Data
+    // $errors = AuthValidator::getCreateErrors($data);
+    // $errors = ProfileValidator::getCreateErrors($data, $errors);
+
+    // //if there are errors
+    // if (!empty($errors)) {
+    //     return $response
+    //         ->setError(true, 'Invalid Parameters')
+    //         ->set('json', 'validation', $errors);
+    // }
+
+    //----------------------------//
+    // 3. Prepare Data
+    //salt on password
+    // $data['auth_password'] = md5($data['auth_password']);
+
+    //deflate permissions
+    // $data['auth_permissions'] = json_encode($data['auth_permissions']);
+
+    //deactive account
+    // $data['auth_active'] = 0;
+
+    //----------------------------//
+    // 4. Process Data
+    //this/these will be used a lot
+    $authSql = AuthService::get('sql');
+    // $authRedis = AuthService::get('redis');
+    // $authElastic = AuthService::get('elastic');
+
+    //save item to database
+    $results = $authSql->addData($data);
+
+    //also create profile
+    // $this->trigger('profile-create', $request, $response);
+
+    $results = array_merge($results, $response->getResults());
+
+    //link item to profile
+    // $authSql->linkProfile($results['auth_id'], $results['profile_id']);
+
+    //index item
+    // $authElastic->create($results['auth_id']);
+
+    //invalidate cache
+    // $authRedis->removeSearch();
+
+    //set response format
+    $response->setError(false)->setResults($results);
+
+    //send mail
+    // $request->setSoftStage($response->getResults());
+
+    //because there's no way the CLI queue would know the host
+    $protocol = 'http';
+    if ($request->getServer('SERVER_PORT') === 443) {
+        $protocol = 'https';
+    }
+
+    $request->setStage('host', $protocol . '://' . $request->getServer('HTTP_HOST'));
+    $data = $request->getStage();
+});
