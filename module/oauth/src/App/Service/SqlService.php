@@ -305,13 +305,11 @@ class SqlService extends AbstractSqlService implements SqlServiceInterface
         return $results;
     }
 
-    public function deletedata($id)
+    public function addData(array $data)
     {
-        //please rely on SQL CASCADING ON DELETE
         return $this->resource
-            ->model()
-            ->setAppId($id)
-            ->remove('sample')
+            ->model($data)
+            ->save('sample')
             ->get();
     }
 

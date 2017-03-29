@@ -2,6 +2,7 @@
 
 <table>
 		{{#each sample}}
+		{{#if active}}
 		<tr>
 			<td>{{sampleID}}</td>
 			<td>{{sampleName}}</td>
@@ -15,5 +16,6 @@
 				<button type="submit">Delete</button>
 			</form></td>
 		</tr>
+		{{/if}}
 		{{/each}}
 </table>

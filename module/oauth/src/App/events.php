@@ -185,6 +185,77 @@ $cradle->on('sampleretrieve', function ($request, $response) {
 
 });
 
+$cradle->on('add-data', function ($request, $response) {
+    //----------------------------//
+    // 1. Get Data
+    $data = [];
+    if ($request->hasStage()) {
+        $data = $request->getStage();
+    }
+
+    //----------------------------//
+    // 2. Validate Data
+    // $errors = AuthValidator::getCreateErrors($data);
+    // $errors = ProfileValidator::getCreateErrors($data, $errors);
+
+    // //if there are errors
+    // if (!empty($errors)) {
+    //     return $response
+    //         ->setError(true, 'Invalid Parameters')
+    //         ->set('json', 'validation', $errors);
+    // }
+
+    //----------------------------//
+    // 3. Prepare Data
+    //salt on password
+    // $data['auth_password'] = md5($data['auth_password']);
+
+    //deflate permissions
+    // $data['auth_permissions'] = json_encode($data['auth_permissions']);
+
+    //deactive account
+    // $data['auth_active'] = 0;
+
+    //----------------------------//
+    // 4. Process Data
+    //this/these will be used a lot
+    $appSql = AppService::get('sql');
+    // $authRedis = AuthService::get('redis');
+    // $authElastic = AuthService::get('elastic');
+
+    //save item to database
+    $results = $appSql->addData($data);
+
+    //also create profile
+    // $this->trigger('profile-create', $request, $response);
+
+    $results = array_merge($results, $response->getResults());
+
+    //link item to profile
+    // $authSql->linkProfile($results['auth_id'], $results['profile_id']);
+
+    //index item
+    // $authElastic->create($results['auth_id']);
+
+    //invalidate cache
+    // $authRedis->removeSearch();
+
+    //set response format
+    $response->setError(false)->setResults($results);
+
+    //send mail
+    // $request->setSoftStage($response->getResults());
+
+    //because there's no way the CLI queue would know the host
+    $protocol = 'http';
+    if ($request->getServer('SERVER_PORT') === 443) {
+        $protocol = 'https';
+    }
+
+    $request->setStage('host', $protocol . '://' . $request->getServer('HTTP_HOST'));
+    $data = $request->getStage();
+});
+
 $cradle->on('deletedata', function ($request, $response) {
     //----------------------------//
     // 1. Get Data
@@ -205,15 +276,11 @@ $cradle->on('deletedata', function ($request, $response) {
     $results = "";
     $appSql = AppService::get('sql');
 
-    //if no results
-    if (!$results) {
-
-        //if no results
-        if (!$results) {
-            //get it from database
-            $results = $appSql->deletedata($data["id"]);
-        }
-    }
+    //save to database
+    $results = $appSql->addData([
+        'sampleID' => $data['id'],
+        'active' => 0
+    ]);
 
     //set response format
     $response->setResults($results);

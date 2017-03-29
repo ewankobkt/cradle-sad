@@ -34,9 +34,9 @@
 	            </div>
 				<div class="field">
 	                <div class="ui sub header">City</div>
-	                	<select name="city" class="ui search selection dropdown" >
+	                	<select name="city" id="city" class="ui search selection dropdown" >
 	                    	<option value="" disabled selected>City</option>
-	            	    	<option ng-repeat="city in cities" value="{{city.CityID}}">{{city.CityName}}</option>
+	            	    	<!--<option ng-repeat="city in cities" value="{{city.CityID}}">{{city.CityName}}</option>-->
 	                	</select>
 	            </div>
 				<div class="field">
@@ -163,8 +163,16 @@ The most fun you'll ever have shopping online.
 	app.controller('myController', function($scope, $http) {
 
 	    $scope.reloadCities = function(){
-	    	$provId = $scope.inputProvince;
-	    	alert($province.0.ProvinceID);
+	    	// $provId = $scope.inputProvince;
+	    	var city = document.getElementById("city");
+    		var option = document.createElement("option");
+    		{{#each cities}}
+    		// {{#if $scope.inputProvince == ProvinceID}}
+    		// option.text = "{{CityName}}";
+    		// city.add(option);
+    		console.log("asd");
+    		// {{/if}}
+    		{{/each}}
 	    }
 
 	    $scope.comparePasswords = function(){
