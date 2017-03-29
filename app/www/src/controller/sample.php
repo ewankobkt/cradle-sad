@@ -6,6 +6,16 @@
  * @param Request $request
  * @param Response $response
  */
+
+function hexrgb ($hexstr)
+    {
+      $int = hexdec($hexstr);
+
+      return array("red" => 0xFF & ($int >> 0x10),
+                   "green" => 0xFF & ($int >> 0x8),
+                   "blue" => 0xFF & $int);
+    }
+
 $cradle->get('/sample', function ($request, $response) {
     //Prepare body
     $provinces = cradle()->trigger('sampleretrieve', $request, $response);
@@ -40,6 +50,7 @@ $cradle->get('/sample/create', function ($request, $response) {
     }
 
     //trigger the job
+    $data['captcha'] = cradle()->trigger('create-captcha', $request, $response);
     cradle()->trigger('addData', $request, $response);
 
     // if ($response->isError()) {
