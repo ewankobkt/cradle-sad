@@ -89,6 +89,7 @@ class ComposerStaticInit314aca67f6c402c14b26a306d8ba4503
             'Cradle\\' => 7,
             'Codeception\\Extension\\' => 22,
             'Codeception\\' => 12,
+            'Captcha\\Bundle\\CaptchaBundle\\' => 29,
         ),
         'A' => 
         array (
@@ -255,6 +256,10 @@ class ComposerStaticInit314aca67f6c402c14b26a306d8ba4503
         'Codeception\\' => 
         array (
             0 => __DIR__ . '/..' . '/codeception/codeception/src/Codeception',
+        ),
+        'Captcha\\Bundle\\CaptchaBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/captcha-com/symfony-captcha-bundle',
         ),
         'Aws\\' => 
         array (

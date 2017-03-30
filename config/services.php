@@ -42,7 +42,7 @@ return [
         'pass' => '<EMAIL PASSWORD>'
     ],
     'captcha-main' => [
-        'token' => '<GOOGLE CAPTCHA TOKEN>',
-        'secret' => '<GOOGLE CAPTCHA SECRET>'
+        'token' => '6LeA5hoUAAAAABKgZHosq_ixsVlEsR40VDbiYqWf',
+        'secret' => '6LeA5hoUAAAAAFMrD-fJKNmyLR4XmBs-9hpEqiRj'
     ]
 ];

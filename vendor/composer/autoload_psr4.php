@@ -45,5 +45,6 @@ return array(
     'Cradle\\' => array($vendorDir . '/cradlephp/framework/src', $vendorDir . '/cradlephp/packages/src'),
     'Codeception\\Extension\\' => array($vendorDir . '/codeception/codeception/ext'),
     'Codeception\\' => array($vendorDir . '/codeception/codeception/src/Codeception'),
+    'Captcha\\Bundle\\CaptchaBundle\\' => array($vendorDir . '/captcha-com/symfony-captcha-bundle'),
     'Aws\\' => array($vendorDir . '/aws/aws-sdk-php/src'),
 );

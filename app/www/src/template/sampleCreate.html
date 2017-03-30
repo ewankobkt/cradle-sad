@@ -1,8 +1,28 @@
+<script type="text/javascript">
+	var btn = document.getElementById("submit");
+	var onloadCallback = function() {
+		grecaptcha.render('html_element', {
+          'sitekey' : '6LeA5hoUAAAAABKgZHosq_ixsVlEsR40VDbiYqWf',
+          'theme' : "dark",
+          'callback' : function(response) {
+          	if (response != ""){
+          		$(":submit").removeAttr("disabled");
+          	}
+          }
+        });
+    }
+</script>
+
 <a href="/sample">Index</a>
 
 <form method="post">
 	<label>Name:</label>
 	<input type="text" name="sampleName"><br>
-	<img src="{{captcha}}" id='captchaimg' alt="captcha"><br>
+	<div id="html_element"></div>
 	<button type="submit">Submit</button>
 </form>
+
+<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+        async defer>
+</script>
+    <!--<script src="{{config 'cdn'}}/scripts/js/googlecaptcha.js?onload=onloadCallback&render=explicit" async defer></script>

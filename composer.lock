@@ -4,8 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4990f6c5d8ba5f80fc644fca545230f6",
-    "content-hash": "d703c9151bea50ec3c69027576caf1f5",
+    "content-hash": "16b1700fe2e01ebab590590f4373ddc7",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -85,7 +84,93 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2016-11-18 23:27:25"
+            "time": "2016-11-18T23:27:25+00:00"
+        },
+        {
+            "name": "captcha-com/captcha",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://git.captcha.com/botdetect-php-captcha-library.git",
+                "reference": "0b647099184e6f830478ee55152c50162bdcd838"
+            },
+            "require": {
+                "php": ">=5.2.1"
+            },
+            "suggest": {
+                "captcha-com/cakephp-captcha": "BotDetect 4 PHP Captcha generator integration for the CakePHP framework.",
+                "captcha-com/laravel-captcha": "BotDetect 4 PHP Captcha generator integration for the Laravel framework.",
+                "captcha-com/symfony-captcha-bundle": "BotDetect 4 PHP Captcha generator integration for the Symfony framework."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Commercial"
+            ],
+            "authors": [
+                {
+                    "name": "BotDetect Captcha",
+                    "email": "botdetect.support@captcha.com",
+                    "homepage": "http://captcha.com/php-captcha.html"
+                }
+            ],
+            "description": "BotDetect 4 PHP Captcha Generator -- Free composer package.",
+            "homepage": "http://captcha.com/php-captcha.html",
+            "keywords": [
+                "captcha"
+            ],
+            "time": "2016-06-06 13:31:24"
+        },
+        {
+            "name": "captcha-com/symfony-captcha-bundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/captcha-com/symfony-captcha-bundle.git",
+                "reference": "636adb8dc10c2ff7093d73df2961ef2797c513f0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/captcha-com/symfony-captcha-bundle/zipball/636adb8dc10c2ff7093d73df2961ef2797c513f0",
+                "reference": "636adb8dc10c2ff7093d73df2961ef2797c513f0",
+                "shasum": ""
+            },
+            "require": {
+                "captcha-com/captcha": "4.*",
+                "php": ">=5.3.9"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Captcha\\Bundle\\CaptchaBundle\\": "/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "BotDetect Captcha",
+                    "email": "botdetect.support@captcha.com",
+                    "homepage": "http://captcha.com/doc/php/symfony-captcha-bundle-quickstart.html"
+                }
+            ],
+            "description": "BotDetect 4 PHP Captcha generator integration for the Symfony framework.",
+            "homepage": "http://captcha.com/doc/php/symfony-captcha-bundle-quickstart.html",
+            "keywords": [
+                "captcha",
+                "captcha bundle",
+                "symfony captcha"
+            ],
+            "time": "2016-09-05 10:18:58"
         },
         {
             "name": "cblanquera/cradle-captcha",
@@ -507,7 +592,7 @@
                 "elasticsearch",
                 "search"
             ],
-            "time": "2016-10-17 19:43:19"
+            "time": "2016-10-17T19:43:19+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -569,7 +654,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2017-01-05 10:54:39"
+            "time": "2017-01-05T10:54:39+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -678,7 +763,7 @@
                 "stream",
                 "uri"
             ],
-            "time": "2016-06-24 23:00:38"
+            "time": "2016-06-24T23:00:38+00:00"
         },
         {
             "name": "guzzlehttp/ringphp",
@@ -829,7 +914,7 @@
                 "headless",
                 "phantomjs"
             ],
-            "time": "2016-10-12 01:52:42"
+            "time": "2016-10-12T01:52:42+00:00"
         },
         {
             "name": "mtdowling/jmespath.php",
@@ -884,7 +969,7 @@
                 "json",
                 "jsonpath"
             ],
-            "time": "2016-12-03 22:08:25"
+            "time": "2016-12-03T22:08:25+00:00"
         },
         {
             "name": "php-amqplib/php-amqplib",
@@ -954,7 +1039,7 @@
                 "queue",
                 "rabbitmq"
             ],
-            "time": "2016-04-11 14:30:01"
+            "time": "2016-04-11T14:30:01+00:00"
         },
         {
             "name": "predis/predis",
@@ -1004,7 +1089,7 @@
                 "predis",
                 "redis"
             ],
-            "time": "2016-06-16 16:22:20"
+            "time": "2016-06-16T16:22:20+00:00"
         },
         {
             "name": "psr/http-message",
@@ -1197,7 +1282,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2016-07-08 11:51:25"
+            "time": "2016-07-08T11:51:25+00:00"
         }
     ],
     "packages-dev": [
@@ -1350,7 +1435,7 @@
                 "functional testing",
                 "unit testing"
             ],
-            "time": "2017-01-11 16:18:28"
+            "time": "2017-01-11T16:18:28+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -1453,7 +1538,7 @@
                 "selenium",
                 "webdriver"
             ],
-            "time": "2017-01-13 15:48:08"
+            "time": "2017-01-13T15:48:08+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -1495,7 +1580,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2016-10-31 17:19:45"
+            "time": "2016-10-31T17:19:45+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -1594,7 +1679,7 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2016-09-30 07:12:33"
+            "time": "2016-09-30T07:12:33+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -1641,7 +1726,7 @@
                     "email": "me@mikevanriel.com"
                 }
             ],
-            "time": "2016-11-25 06:54:22"
+            "time": "2016-11-25T06:54:22+00:00"
         },
         {
             "name": "phpspec/prophecy",
@@ -1767,7 +1852,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-12-20 15:22:42"
+            "time": "2016-12-20T15:22:42+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -1855,7 +1940,7 @@
             "keywords": [
                 "template"
             ],
-            "time": "2015-06-21 13:50:34"
+            "time": "2015-06-21T13:50:34+00:00"
         },
         {
             "name": "phpunit/php-timer",
@@ -1899,7 +1984,7 @@
             "keywords": [
                 "timer"
             ],
-            "time": "2016-05-12 18:03:57"
+            "time": "2016-05-12T18:03:57+00:00"
         },
         {
             "name": "phpunit/php-token-stream",
@@ -2030,7 +2115,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-01-02 15:53:34"
+            "time": "2017-01-02T15:53:34+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -2680,7 +2765,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2017-01-12 22:17:09"
+            "time": "2017-01-12T22:17:09+00:00"
         },
         {
             "name": "symfony/browser-kit",
