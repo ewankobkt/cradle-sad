@@ -1,6 +1,8 @@
 <a href="/sample">Index</a>
 
 <form method="post" action="/sample/create">
+	<img width="200" src="{{item.profile_image}}" />
+	<input type="hidden" name="profile_image" value="{{item.profile_image}}" /><br>
 	<label>Name:</label>
 	<input type="hidden" name="sampleID" value="{{id}}">
 	<input type="text" name="sampleName" value="{{name}}">

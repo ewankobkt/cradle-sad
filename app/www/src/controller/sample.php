@@ -115,7 +115,7 @@ $cradle->post('/sample/update', function ($request, $response) {
 
     //it was good
     //add a flash
-    // cradle('global')->flash('Success!', 'success');
+    cradle('global')->flash('Success!', 'success');
 
     $class = 'page-auth-register';
     $title = cradle('global')->translate('Sampol');
