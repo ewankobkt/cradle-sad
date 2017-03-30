@@ -2,8 +2,8 @@
 
 <form method="post" action="/sample/create">
 	<label>Name:</label>
-	<input type="hidden" name="csrf" value="{{csrf}}" />
 	<input type="hidden" name="sampleID" value="{{id}}">
 	<input type="text" name="sampleName" value="{{name}}">
+	<input type="hidden" name="csrf" value="{{csrf}}" />
 	<button type="submit">Submit</button>
 </form>

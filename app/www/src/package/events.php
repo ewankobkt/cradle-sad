@@ -124,7 +124,3 @@ $cradle->on('render-www-mainteParent', function ($request, $response) {
 
     $response->setContent($content);
 });
-
-$cradle->on('create-captcha', function ($request, $response) {
-    // cradle()->captcha
-});

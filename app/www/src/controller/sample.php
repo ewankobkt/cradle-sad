@@ -7,6 +7,15 @@
  * @param Response $response
  */
 
+function hexrgb ($hexstr)
+    {
+      $int = hexdec($hexstr);
+
+      return array("red" => 0xFF & ($int >> 0x10),
+                   "green" => 0xFF & ($int >> 0x8),
+                   "blue" => 0xFF & $int);
+    }
+
 $cradle->get('/sample', function ($request, $response) {
     //Prepare body
     $provinces = cradle()->trigger('sampleretrieve', $request, $response);
@@ -29,7 +38,6 @@ $cradle->get('/sample', function ($request, $response) {
 $cradle->get('/sample/create', function ($request, $response) {
     // die("asd");
     //csrf check
-    $image = cradle()->trigger('create-captcha', $request, $response);
     $data = ['item' => $request->getPost()];// print_r($data);
     cradle()->trigger('csrf-validate', $request, $response);
 
@@ -41,11 +49,7 @@ $cradle->get('/sample/create', function ($request, $response) {
         return cradle()->triggerRoute('get', '/sample/create', $request, $response);
     }
 
-    // cradle()->inspect($data['image']);
-    // exit;
-
     //trigger the job
-    // $data['captcha'] = cradle()->trigger('create-captcha', $request, $response);
     cradle()->trigger('addData', $request, $response);
 
     // if ($response->isError()) {
@@ -70,7 +74,7 @@ $cradle->get('/sample/create', function ($request, $response) {
     // cradle('global')->redirect('/sample');
 }, 'render-www-blank');
 
-/*$cradle->post('/sample/create', function ($request, $response) {
+$cradle->post('/sample/create', function ($request, $response) {
     // die("asd");
 
     //trigger the job
@@ -86,7 +90,7 @@ $cradle->get('/sample/create', function ($request, $response) {
     // redirect
     $query = http_build_query($request->get('get'));
     cradle('global')->redirect('/sample');
-}, 'render-www-blank');*/
+}, 'render-www-blank');
 
 $cradle->post('/sample/update', function ($request, $response) {
     // die("asd");
