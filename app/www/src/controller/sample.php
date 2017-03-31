@@ -7,14 +7,7 @@
  * @param Response $response
  */
 
-function hexrgb ($hexstr)
-    {
-      $int = hexdec($hexstr);
-
-      return array("red" => 0xFF & ($int >> 0x10),
-                   "green" => 0xFF & ($int >> 0x8),
-                   "blue" => 0xFF & $int);
-    }
+use Cradle\Module\Utility\File;
 
 $cradle->get('/sample', function ($request, $response) {
     //Prepare body
@@ -36,21 +29,27 @@ $cradle->get('/sample', function ($request, $response) {
 }, 'render-www-blank');
 
 $cradle->get('/sample/create', function ($request, $response) {
-    // die("asd");
-    //csrf check
-    $data = ['item' => $request->getPost()];// print_r($data);
-    cradle()->trigger('csrf-validate', $request, $response);
+    //Prepare body
+    $data = ['item' => $request->getPost()];
+
+    //add CSRF
+    cradle()->trigger('csrf-load', $request, $response);
+    $data['csrf'] = $response->getResults('csrf');
+
+    //add captcha
+    cradle()->trigger('captcha-load', $request, $response);
+    $data['captcha'] = $response->getResults('captcha');
 
     if ($response->isError()) {
-        return cradle()->triggerRoute('get', '/sample/create', $request, $response);
-    }
 
-    if ($response->isError()) {
-        return cradle()->triggerRoute('get', '/sample/create', $request, $response);
+        $response->setFlash($response->getMessage(), 'danger');
+        $data['errors'] = $response->getValidation();
     }
+    // cradle()->inspect($data);
+    // exit;
 
     //trigger the job
-    cradle()->trigger('addData', $request, $response);
+    // cradle()->trigger('addData', $request, $response);
 
     // if ($response->isError()) {
     //     return cradle()->triggerRoute('get', '/sample/create', $request, $response);
@@ -75,10 +74,32 @@ $cradle->get('/sample/create', function ($request, $response) {
 }, 'render-www-blank');
 
 $cradle->post('/sample/create', function ($request, $response) {
-    // die("asd");
+
+    //csrf check
+    cradle()->trigger('csrf-validate', $request, $response);
+
+    if ($response->isError()) {
+        return cradle()->triggerRoute('get', '/sample/create', $request, $response);
+    }
+
+    //captcha check
+    cradle()->trigger('captcha-validate', $request, $response);
+
+    if ($response->isError()) {
+        return cradle()->triggerRoute('get', '/sample/create', $request, $response);
+    }
 
     //trigger the job
     cradle()->trigger('add-data', $request, $response);
+
+    if ($response->isError()) {
+        return cradle()->triggerRoute('get', '/sample/create', $request, $response);
+    }
+
+    //it was good
+    //add a flash
+    cradle('global')->flash('Success!', 'success');
+    // cradle()->inspect($response->isError());
 
     // if ($response->isError()) {
     //     return cradle()->triggerRoute('get', '/sample/create', $request, $response);

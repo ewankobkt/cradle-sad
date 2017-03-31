@@ -1,31 +1,24 @@
-<script type="text/javascript">
-	var btn = document.getElementById("submit");
-	var onloadCallback = function() {
-		grecaptcha.render('html_element', {
-          'sitekey' : '6LeA5hoUAAAAABKgZHosq_ixsVlEsR40VDbiYqWf',
-          'theme' : "dark",
-          'callback' : function(response) {
-          	if (response != ""){
-          		$(":submit").removeAttr("disabled");
-          	}
-          }
-        });
-    }
-</script>
-
 <a href="/sample">Index</a>
 
+<div class="auth-signup-body auth-form container">
 <form method="post">
-	<img width="200" src="{{item.profile_image}}" />
-	<input type="hidden" name="profile_image" value="{{item.profile_image}}" />
 	<label>Name:</label>
 	<input type="text" name="sampleName"><br>
-	<div id="html_element"></div>
+	<!-- START: Captcha -->
+                        <div class="form-group{{#if errors.captcha}} has-error{{/if}}">
+                            <script src="https://www.google.com/recaptcha/api.js"></script>
+                            <div class="g-recaptcha" data-sitekey="{{captcha}}"></div>
+                            {{#if errors.captcha}}
+                            <span class="help-text">{{errors.captcha}}</span>
+                            {{/if}}
+                        </div>
+                        <!-- END: Captcha -->
 	<input type="hidden" name="csrf" value="{{csrf}}" />
-	<button type="submit">Submit</button>
+	<button type="submit" >Submit</button>
 </form>
+</div>
+    <!--<script src="{{config 'cdn'}}/scripts/js/googlecaptcha.js?onload=onloadCallback&render=explicit" async defer></script>
 
 <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
         async defer>
 </script>
-    <!--<script src="{{config 'cdn'}}/scripts/js/googlecaptcha.js?onload=onloadCallback&render=explicit" async defer></script>

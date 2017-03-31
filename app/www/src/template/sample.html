@@ -1,10 +1,10 @@
-<a href="sample/create">Create something</a>
+<a href="sample/create?redirect_uri={{page.meta.path}}">Create something</a>
 
 <table>
 		{{#each sample}}
 		{{#if active}}
 		<tr>
-			<td><img width="200" src="{{imagepath}}" /></td>
+			<td><img width="200" height="200" src="{{imagepath}}" /></td>
 			<td>{{sampleID}}</td>
 			<td>{{sampleName}}</td>
 			<td><form method="post" action="sample/update">
