@@ -32,6 +32,10 @@ $cradle->get('/sample/create', function ($request, $response) {
     //Prepare body
     $data = ['item' => $request->getPost()];
 
+    //add CDN
+    $config = $this->package('global')->service('s3-main');
+    $data['cdn_config'] = File::getS3Client($config);
+
     //add CSRF
     cradle()->trigger('csrf-load', $request, $response);
     $data['csrf'] = $response->getResults('csrf');
@@ -45,19 +49,12 @@ $cradle->get('/sample/create', function ($request, $response) {
         $response->setFlash($response->getMessage(), 'danger');
         $data['errors'] = $response->getValidation();
     }
+
     // cradle()->inspect($data);
     // exit;
 
     //trigger the job
     // cradle()->trigger('addData', $request, $response);
-
-    // if ($response->isError()) {
-    //     return cradle()->triggerRoute('get', '/sample/create', $request, $response);
-    // }
-
-    //it was good
-    //add a flash
-    // cradle('global')->flash('Success!', 'success');
 
     $class = 'page-auth-register';
     $title = cradle('global')->translate('Sampol');
@@ -68,9 +65,6 @@ $cradle->get('/sample/create', function ($request, $response) {
         ->setPage('title', $title)
         ->setPage('class', $class)
         ->setContent($body);
-    // //redirect
-    // $query = http_build_query($request->get('get'));
-    // cradle('global')->redirect('/sample');
 }, 'render-www-blank');
 
 $cradle->post('/sample/create', function ($request, $response) {
@@ -89,6 +83,9 @@ $cradle->post('/sample/create', function ($request, $response) {
         return cradle()->triggerRoute('get', '/sample/create', $request, $response);
     }
 
+    // cradle()->inspect($data);
+    // exit;
+
     //trigger the job
     cradle()->trigger('add-data', $request, $response);
 
@@ -96,18 +93,9 @@ $cradle->post('/sample/create', function ($request, $response) {
         return cradle()->triggerRoute('get', '/sample/create', $request, $response);
     }
 
-    //it was good
     //add a flash
     cradle('global')->flash('Success!', 'success');
-    // cradle()->inspect($response->isError());
 
-    // if ($response->isError()) {
-    //     return cradle()->triggerRoute('get', '/sample/create', $request, $response);
-    // }
-
-    // it was good
-    // add a flash
-    // cradle('global')->flash('Success!', 'success');
     // redirect
     $query = http_build_query($request->get('get'));
     cradle('global')->redirect('/sample');

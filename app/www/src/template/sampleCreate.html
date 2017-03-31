@@ -1,22 +1,57 @@
 <a href="/sample">Index</a>
 
 <div class="auth-signup-body auth-form container">
-<form method="post">
+<div class="panel panel-default clear">
+<form method="post"
+{{#if cdn_config}}
+    data-do="cdn-upload"
+    data-on="submit"
+    data-progress="{{_ 'We are uploading your files. Please do not refresh page.'}}"
+    data-complete="{{_ 'Upload Complete'}}"
+    data-enctype="{{cdn_config.form.enctype}}"
+    data-method="{{cdn_config.form.method}}"
+    data-action="{{cdn_config.form.action}}"
+    data-cdn="{{cdn_config.form.action}}"
+    data-acl="{{cdn_config.inputs.acl}}"
+    data-key="{{cdn_config.inputs.key}}"
+    data-credential="{{cdn_config.inputs.X-Amz-Credential}}"
+    data-algorythm="{{cdn_config.inputs.X-Amz-Algorithm}}"
+    data-date="{{cdn_config.inputs.X-Amz-Date}}"
+    data-policy="{{cdn_config.inputs.Policy}}"
+    data-signature="{{cdn_config.inputs.X-Amz-Signature}}"
+{{/if}}>
+<div
+    data-do="image-field"
+    data-name="profile_image"
+    data-width="200"
+    data-height="200"
+    data-alt="Change this Photo"
+    class="image-field">
+
+    <input type="hidden" name="profile_image" value="{{item.imagepath}}" />
+    <img width="200" src="/images/default-avatar.png" />
+</div>
+<div class="form-group">
+	<div class="input-group">
 	<label>Name:</label>
 	<input type="text" name="sampleName"><br>
+	</div>
 	<!-- START: Captcha -->
-                        <div class="form-group{{#if errors.captcha}} has-error{{/if}}">
-                            <script src="https://www.google.com/recaptcha/api.js"></script>
-                            <div class="g-recaptcha" data-sitekey="{{captcha}}"></div>
-                            {{#if errors.captcha}}
-                            <span class="help-text">{{errors.captcha}}</span>
-                            {{/if}}
-                        </div>
-                        <!-- END: Captcha -->
+    <div class="form-group{{#if errors.captcha}} has-error{{/if}}">
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+        <div class="g-recaptcha" data-sitekey="{{captcha}}"></div>
+            {{#if errors.captcha}}
+            <span class="help-text">{{errors.captcha}}</span>
+            {{/if}}
+        </div>
+     <!-- END: Captcha -->
 	<input type="hidden" name="csrf" value="{{csrf}}" />
 	<button type="submit" >Submit</button>
+</div>
 </form>
 </div>
+
+<script type="text/javascript" src="/scripts/cropper.js"></script>
     <!--<script src="{{config 'cdn'}}/scripts/js/googlecaptcha.js?onload=onloadCallback&render=explicit" async defer></script>
 
 <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
