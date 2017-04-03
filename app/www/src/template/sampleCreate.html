@@ -22,13 +22,13 @@
 {{/if}}>
 <div
     data-do="image-field"
-    data-name="profile_image"
+    data-name="imagepath"
     data-width="200"
     data-height="200"
     data-alt="Change this Photo"
     class="image-field">
 
-    <input type="hidden" name="profile_image" value="{{item.imagepath}}" />
+    <input type="hidden" name="imagepath" value="{{item.imagepath}}" />
     <img width="200" src="/images/default-avatar.png" />
 </div>
 <div class="form-group">
@@ -46,7 +46,7 @@
         </div>
      <!-- END: Captcha -->
 	<input type="hidden" name="csrf" value="{{csrf}}" />
-	<button type="submit" >Submit</button>
+	<button type="submit" class="btn btn-primary">Submit</button>
 </div>
 </form>
 </div>

@@ -7,6 +7,12 @@
  * @param Response $response
  */
 
+use Cradle\Module\Profile\Service as ProfileService;
+use Cradle\Module\Profile\Validator as ProfileValidator;
+
+use Cradle\Http\Request;
+use Cradle\Http\Response;
+
 use Cradle\Module\Utility\File;
 
 $cradle->get('/sample', function ($request, $response) {
@@ -82,9 +88,6 @@ $cradle->post('/sample/create', function ($request, $response) {
     if ($response->isError()) {
         return cradle()->triggerRoute('get', '/sample/create', $request, $response);
     }
-
-    // cradle()->inspect($data);
-    // exit;
 
     //trigger the job
     cradle()->trigger('add-data', $request, $response);

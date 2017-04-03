@@ -10,6 +10,14 @@
 use Cradle\Module\Oauth\App\Service as AppService;
 use Cradle\Module\Oauth\App\Validator as AppValidator;
 
+use Cradle\Module\Profile\Service as ProfileService;
+use Cradle\Module\Profile\Validator as ProfileValidator;
+
+use Cradle\Http\Request;
+use Cradle\Http\Response;
+
+use Cradle\Module\Utility\File;
+
 $cradle->on('provinces', function ($request, $response) {
     //----------------------------//
     // 1. Get Data
@@ -222,6 +230,17 @@ $cradle->on('add-data', function ($request, $response) {
     $appSql = AppService::get('sql');
     // $authRedis = AuthService::get('redis');
     // $authElastic = AuthService::get('elastic');
+
+
+    if (isset($data['imagepath'])) {
+        //upload files
+        //try cdn if enabled
+        $config = $this->package('global')->service('s3-main');
+        $data['imagepath'] = File::base64ToS3($data['imagepath'], $config);
+        //try being old school
+        $upload = $this->package('global')->path('upload');
+        $data['imagepath'] = File::base64ToUpload($data['imagepath'], $upload);
+    }
 
     //save item to database
     $results = $appSql->addData($data);
