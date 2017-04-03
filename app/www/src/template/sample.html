@@ -4,7 +4,11 @@
 		{{#each sample}}
 		{{#if active}}
 		<tr>
+		    {{#if imagepath}}
 			<td><img width="200" height="200" src="{{imagepath}}" /></td>
+			{{else}}
+			<td><img width="200" src="/images/default-avatar.png" /></td>
+			{{/if}}
 			<td>{{sampleID}}</td>
 			<td>{{sampleName}}</td>
 			<td><form method="post" action="sample/update">

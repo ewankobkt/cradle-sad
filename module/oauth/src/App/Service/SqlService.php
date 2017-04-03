@@ -313,4 +313,14 @@ class SqlService extends AbstractSqlService implements SqlServiceInterface
             ->get();
     }
 
+    public function getData($id)
+    {
+        $search = $this->resource
+            ->search('sample')->addFilter('sampleID = %s', $id);
+
+        $results = $search->getRow();
+
+        return $results;
+    }
+
 }

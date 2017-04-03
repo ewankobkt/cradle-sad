@@ -56,9 +56,6 @@ $cradle->get('/sample/create', function ($request, $response) {
         $data['errors'] = $response->getValidation();
     }
 
-    // cradle()->inspect($data);
-    // exit;
-
     //trigger the job
     // cradle()->trigger('addData', $request, $response);
 
@@ -75,27 +72,43 @@ $cradle->get('/sample/create', function ($request, $response) {
 
 $cradle->post('/sample/create', function ($request, $response) {
 
-    //csrf check
-    cradle()->trigger('csrf-validate', $request, $response);
+    $data = ['item' => $request->getPost()];
 
-    if ($response->isError()) {
-        return cradle()->triggerRoute('get', '/sample/create', $request, $response);
+    if(!$data['item']['sampleName']) {
+        if ($response->isError()) {
+            return cradle()->triggerRoute('get', '/sample/create', $request, $response);
+        }
+
+        //csrf check
+        cradle()->trigger('csrf-validate', $request, $response);
+
+        //captcha check
+        cradle()->trigger('captcha-validate', $request, $response);
+
+        if ($response->isError()) {
+            return cradle()->triggerRoute('get', '/sample/create', $request, $response);
+        }
+
+        //trigger the job
+        cradle()->trigger('add-data', $request, $response);
+
+        if ($response->isError()) {
+            return cradle()->triggerRoute('get', '/sample/create', $request, $response);
+        }
+
+    } else {
+
+        //csrf check
+        cradle()->trigger('csrf-validate', $request, $response);
+
+        //trigger the job
+        cradle()->trigger('add-data', $request, $response);
+
     }
 
-    //captcha check
-    cradle()->trigger('captcha-validate', $request, $response);
-
-    if ($response->isError()) {
-        return cradle()->triggerRoute('get', '/sample/create', $request, $response);
-    }
-
-    //trigger the job
-    cradle()->trigger('add-data', $request, $response);
-
-    if ($response->isError()) {
-        return cradle()->triggerRoute('get', '/sample/create', $request, $response);
-    }
-
+    // cradle()->inspect($data);
+    // exit;
+    
     //add a flash
     cradle('global')->flash('Success!', 'success');
 
@@ -110,13 +123,18 @@ $cradle->post('/sample/update', function ($request, $response) {
     $data = $request->getPost(); //print_r($data);
     cradle()->trigger('csrf-validate', $request, $response);
 
-    if ($response->isError()) {
-        return cradle()->triggerRoute('get', '/sample/update', $request, $response);
-    }
+    //add CDN
+    $config = $this->package('global')->service('s3-main');
+    $data['cdn_config'] = File::getS3Client($config);
 
-    if ($response->isError()) {
-        return cradle()->triggerRoute('get', '/sample/create', $request, $response);
-    }
+    //add CSRF
+    cradle()->trigger('csrf-load', $request, $response);
+    $data['csrf'] = $response->getResults('csrf');
+
+    $data['item'] = cradle()->trigger('getdata', $request, $response)->response->json["results"];
+
+    // cradle()->inspect($data);
+    // exit;
 
     //trigger the job
     // cradle()->trigger('addData', $request, $response);
