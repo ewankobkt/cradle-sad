@@ -2,26 +2,18 @@
 
 <table>
 		{{#each sample}}
-		{{#if active}}
 		<tr>
-		    {{#if imagepath}}
-			<td><img width="200" height="200" src="{{imagepath}}" /></td>
-			{{else}}
-			<td><img width="200" src="/images/default-avatar.png" /></td>
-			{{/if}}
-			<td>{{sampleID}}</td>
-			<td>{{sampleName}}</td>
+			<td style="color: white">{{id}}</td>
+			<td style="color: white">{{sampleName}}</td>
 			<td><form method="post" action="sample/update">
-				<input type="hidden" name="id" value="{{sampleID}}">
+				<input type="hidden" name="id" value="{{id}}">
 				<input type="hidden" name="name" value="{{sampleName}}">
 				<button type="submit">Update</button>
 			</form></td>
 			<td><form method="post" action="sample/delete">
-				<input type="hidden" name="csrf" value="{{csrf}}" />
-				<input type="hidden" name="id" value="{{sampleID}}">
+				<input type="hidden" name="id" value="{{id}}">
 				<button type="submit">Delete</button>
 			</form></td>
 		</tr>
-		{{/if}}
 		{{/each}}
 </table>

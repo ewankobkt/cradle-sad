@@ -15,15 +15,46 @@ use Cradle\Http\Response;
 
 use Cradle\Module\Utility\File;
 
+
 $cradle->get('/sample', function ($request, $response) {
     //Prepare body
-    $provinces = cradle()->trigger('sampleretrieve', $request, $response);
-    $data['sample'] = $provinces->response->json["results"];;
-// exit;
+    // cradle()->trigger('sampleretrieve', $request, $response);
+    // $data['sample'] = $response->json["results"];
+
+    // print_r($es);
+    // exit;
+    $client = Elasticsearch\ClientBuilder::create()->build();
+
+    $query = $client->search([
+        'body' => [
+            'query' => [
+                'match_all' =>[]
+            ]
+        ]
+    ]);
+
+    // print_r($query['hits']['hits']);
+    $results = $query['hits']['hits'];
+    $data['sample'] = [];
+    foreach ($results as $key => $result) {
+        // print_r($result['_source']);
+        $data['sample'][$key] = array(
+            'id' => $result['_id'],
+            'sampleName' => $result['_source']['sampleName']
+        );
+        // array_push($data[], $result['_source']['sampleName']);
+        // array_push($data[], $result['_id']);
+    }
+
     //Render body
     $class = 'page-auth-register';
     $title = cradle('global')->translate('Sampol');
-    $body = cradle('/app/www')->template('sample', $data);
+
+    if ($data) {
+        $body = cradle('/app/www')->template('sample', $data);
+    } else {
+        $body = cradle('/app/www')->template('sample');
+    }
 
     //Set Content
     $response
@@ -56,9 +87,6 @@ $cradle->get('/sample/create', function ($request, $response) {
         $data['errors'] = $response->getValidation();
     }
 
-    //trigger the job
-    // cradle()->trigger('addData', $request, $response);
-
     $class = 'page-auth-register';
     $title = cradle('global')->translate('Sampol');
     $body = cradle('/app/www')->template('sampleCreate', $data);
@@ -73,44 +101,68 @@ $cradle->get('/sample/create', function ($request, $response) {
 $cradle->post('/sample/create', function ($request, $response) {
 
     $data = ['item' => $request->getPost()];
+    $client = Elasticsearch\ClientBuilder::create()->build();
 
-    if(!$data['item']['sampleName']) {
-        if ($response->isError()) {
-            return cradle()->triggerRoute('get', '/sample/create', $request, $response);
+    // if(!$data['item']['sampleName']) {
+    //     if ($response->isError()) {
+    //         return cradle()->triggerRoute('get', '/sample/create', $request, $response);
+    //     }
+
+    //     //csrf check
+    //     cradle()->trigger('csrf-validate', $request, $response);
+
+    //     //captcha check
+    //     // cradle()->trigger('captcha-validate', $request, $response);
+
+    //     if ($response->isError()) {
+    //         return cradle()->triggerRoute('get', '/sample/create', $request, $response);
+    //     }
+
+    //     //trigger the job
+    //     cradle()->trigger('add-data', $request, $response);
+
+    //     if ($response->isError()) {
+    //         return cradle()->triggerRoute('get', '/sample/create', $request, $response);
+    //     }
+
+    //     //add a flash
+    //     cradle('global')->flash('Data added!', 'success');
+
+    // } else {
+    //     //csrf check
+    //     cradle()->trigger('csrf-validate', $request, $response);
+
+    //     //trigger the job
+    //     cradle()->trigger('add-data', $request, $response);
+
+    //     //add a flash
+    //     cradle('global')->flash('Data updated!', 'success');
+    // }
+
+    // print_r($data);
+    // exit;
+
+    if ($data['item']['sampleName']) {
+        if (isset($data['item']['sampleID'])) {
+            $index = $client->index([
+                'index' => 'samples',
+                'type' => 'sample',
+                'id' => $data['item']['sampleID'],
+                'body' => [
+                    'sampleName' => $data['item']['sampleName']
+                ]
+            ]);
+        } else {
+            $index = $client->index([
+                'index' => 'samples',
+                'type' => 'sample',
+                'body' => [
+                    'sampleName' => $data['item']['sampleName']
+                ]
+            ]);
         }
-
-        //csrf check
-        cradle()->trigger('csrf-validate', $request, $response);
-
-        //captcha check
-        cradle()->trigger('captcha-validate', $request, $response);
-
-        if ($response->isError()) {
-            return cradle()->triggerRoute('get', '/sample/create', $request, $response);
-        }
-
-        //trigger the job
-        cradle()->trigger('add-data', $request, $response);
-
-        if ($response->isError()) {
-            return cradle()->triggerRoute('get', '/sample/create', $request, $response);
-        }
-
-    } else {
-
-        //csrf check
-        cradle()->trigger('csrf-validate', $request, $response);
-
-        //trigger the job
-        cradle()->trigger('add-data', $request, $response);
-
     }
 
-    // cradle()->inspect($data);
-    // exit;
-    
-    //add a flash
-    cradle('global')->flash('Success!', 'success');
 
     // redirect
     $query = http_build_query($request->get('get'));
@@ -118,9 +170,9 @@ $cradle->post('/sample/create', function ($request, $response) {
 }, 'render-www-blank');
 
 $cradle->post('/sample/update', function ($request, $response) {
-    // die("asd");
+    
     //csrf check
-    $data = $request->getPost(); //print_r($data);
+    $data = $request->getPost();
     cradle()->trigger('csrf-validate', $request, $response);
 
     //add CDN
@@ -131,19 +183,10 @@ $cradle->post('/sample/update', function ($request, $response) {
     cradle()->trigger('csrf-load', $request, $response);
     $data['csrf'] = $response->getResults('csrf');
 
-    $data['item'] = cradle()->trigger('getdata', $request, $response)->response->json["results"];
+    // $data['item'] = cradle()->trigger('getdata', $request, $response)->response->json["results"];
+    $data['item']['sampleName'] = $data['name'];
+    $data['item']['id'] = $data['id'];
 
-    // cradle()->inspect($data);
-    // exit;
-
-    //trigger the job
-    // cradle()->trigger('addData', $request, $response);
-
-    // if ($response->isError()) {
-    //     return cradle()->triggerRoute('get', '/sample/create', $request, $response);
-    // }
-
-    //it was good
     //add a flash
     cradle('global')->flash('Success!', 'success');
 
@@ -156,26 +199,26 @@ $cradle->post('/sample/update', function ($request, $response) {
         ->setPage('title', $title)
         ->setPage('class', $class)
         ->setContent($body);
-    // //redirect
-    // $query = http_build_query($request->get('get'));
-    // cradle('global')->redirect('/sample');
 }, 'render-www-blank');
 
 $cradle->post('/sample/delete', function ($request, $response) {
-    // die("asd");
+
+    $client = Elasticsearch\ClientBuilder::create()->build();
+    
     //csrf check
-    $data = ['item' => $request->getPost()];// print_r($data);
+    $data = ['item' => $request->getPost()];
+
+    $index = $client->delete([
+        'index' => 'samples',
+        'type' => 'sample',
+        'id' => $data['item']['id']
+    ]);
 
     //trigger the job
-    cradle()->trigger('deletedata', $request, $response);
+    // cradle()->trigger('deletedata', $request, $response);
 
-    // if ($response->isError()) {
-    //     return cradle()->triggerRoute('get', '/sample/create', $request, $response);
-    // }
-
-    //it was good
     //add a flash
-    // cradle('global')->flash('Success!', 'success');
+    cradle('global')->flash('Delete complete!', 'success');
 
     //redirect
     $query = http_build_query($request->get('get'));
