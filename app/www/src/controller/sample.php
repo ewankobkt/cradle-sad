@@ -18,11 +18,6 @@ use Cradle\Module\Utility\File;
 
 $cradle->get('/sample', function ($request, $response) {
     //Prepare body
-    // cradle()->trigger('sampleretrieve', $request, $response);
-    // $data['sample'] = $response->json["results"];
-
-    // print_r($es);
-    // exit;
     $client = Elasticsearch\ClientBuilder::create()->build();
 
     $query = $client->search([
@@ -33,17 +28,13 @@ $cradle->get('/sample', function ($request, $response) {
         ]
     ]);
 
-    // print_r($query['hits']['hits']);
     $results = $query['hits']['hits'];
     $data['sample'] = [];
     foreach ($results as $key => $result) {
-        // print_r($result['_source']);
         $data['sample'][$key] = array(
             'id' => $result['_id'],
             'sampleName' => $result['_source']['sampleName']
         );
-        // array_push($data[], $result['_source']['sampleName']);
-        // array_push($data[], $result['_id']);
     }
 
     //Render body
@@ -103,45 +94,6 @@ $cradle->post('/sample/create', function ($request, $response) {
     $data = ['item' => $request->getPost()];
     $client = Elasticsearch\ClientBuilder::create()->build();
 
-    // if(!$data['item']['sampleName']) {
-    //     if ($response->isError()) {
-    //         return cradle()->triggerRoute('get', '/sample/create', $request, $response);
-    //     }
-
-    //     //csrf check
-    //     cradle()->trigger('csrf-validate', $request, $response);
-
-    //     //captcha check
-    //     // cradle()->trigger('captcha-validate', $request, $response);
-
-    //     if ($response->isError()) {
-    //         return cradle()->triggerRoute('get', '/sample/create', $request, $response);
-    //     }
-
-    //     //trigger the job
-    //     cradle()->trigger('add-data', $request, $response);
-
-    //     if ($response->isError()) {
-    //         return cradle()->triggerRoute('get', '/sample/create', $request, $response);
-    //     }
-
-    //     //add a flash
-    //     cradle('global')->flash('Data added!', 'success');
-
-    // } else {
-    //     //csrf check
-    //     cradle()->trigger('csrf-validate', $request, $response);
-
-    //     //trigger the job
-    //     cradle()->trigger('add-data', $request, $response);
-
-    //     //add a flash
-    //     cradle('global')->flash('Data updated!', 'success');
-    // }
-
-    // print_r($data);
-    // exit;
-
     if ($data['item']['sampleName']) {
         if (isset($data['item']['sampleID'])) {
             $index = $client->index([
@@ -183,7 +135,6 @@ $cradle->post('/sample/update', function ($request, $response) {
     cradle()->trigger('csrf-load', $request, $response);
     $data['csrf'] = $response->getResults('csrf');
 
-    // $data['item'] = cradle()->trigger('getdata', $request, $response)->response->json["results"];
     $data['item']['sampleName'] = $data['name'];
     $data['item']['id'] = $data['id'];
 
@@ -213,9 +164,6 @@ $cradle->post('/sample/delete', function ($request, $response) {
         'type' => 'sample',
         'id' => $data['item']['id']
     ]);
-
-    //trigger the job
-    // cradle()->trigger('deletedata', $request, $response);
 
     //add a flash
     cradle('global')->flash('Delete complete!', 'success');
